@@ -6,8 +6,26 @@ import time
 import random
 
         # Step 2: Create Screen 
+
+def save_score():
+      global score, high
+      if score > high:
+            with open("snake.dat", "w") as file:
+                 file.write(str(score))
+
+def high_score():
+      try:
+            with open("snake.dat", "r") as file:
+                  return int(file.read())
+      except:
+            return 0
+      
 DELAY = 0.1
 segments = []
+
+score = 0
+high = high_score()
+
 win = turtle.Screen()
 win.title("Snake Game")
 win.bgcolor("black")
@@ -34,6 +52,14 @@ food.color("red")
 food.penup()
 food.goto(0,100) # This Will Start Randomly On Screen 
 
+
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color("white")
+pen.penup()
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write(f"Score: {score} High Score: {high}", align ="center",font=("courier", 14, "normal"))
   #Move Section // Come Back To This ??? 
 
  #Moving with def 
@@ -60,7 +86,12 @@ def move():
                 x = segments[i - 1].xcor()
                 y= segments[i - 1].ycor()
                 segments[i].goto(x,y)
-
+                # Trying to trigger a game over with this code below 
+        if head.xcor() > 190 or head.xcor() < -190 or head.ycor() > 290 or head.ycor() < -290:
+                        save_score()
+                        print("Game Over")
+                        time.sleep(2)
+                        win.bye()
 # FIrst part 
         if len(segments) > 0:
                 segments[0].goto(head.xcor(), head.ycor())
@@ -87,10 +118,15 @@ def move():
               x = random.randint(-180, 180)
               y = random.randint(-280,280)
               food.goto(x,y)
-
-
               grow_snake()
               
+              global score
+              score += 10
+              pen.clear()
+              pen.write(f"Score: {score} High Score: {high}", align ="center",font=("courier", 14, "normal"))
+
+             
+
 def grow_snake():
         new_segment = turtle.Turtle()
         new_segment.speed(0)
@@ -99,7 +135,7 @@ def grow_snake():
         new_segment.penup()
         segments.append(new_segment)
 # Key Bind Here --- Imortant -- 
-
+        
  #That will take an input from the device being targeted .... ( assuming this is how it works )
 
 win.listen()
