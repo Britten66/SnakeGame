@@ -86,12 +86,7 @@ def move():
                 x = segments[i - 1].xcor()
                 y= segments[i - 1].ycor()
                 segments[i].goto(x,y)
-                # Trying to trigger a game over with this code below 
-        if head.xcor() > 190 or head.xcor() < -190 or head.ycor() > 290 or head.ycor() < -290:
-                        save_score()
-                        print("Game Over")
-                        time.sleep(2)
-                        win.bye()
+          
 # FIrst part 
         if len(segments) > 0:
                 segments[0].goto(head.xcor(), head.ycor())
@@ -114,18 +109,25 @@ def move():
 
 
         if head.distance(food) < 20:
-              
+              global score, high
               x = random.randint(-180, 180)
               y = random.randint(-280,280)
               food.goto(x,y)
               grow_snake()
               
-              global score
+             
               score += 10
+              if score > high:
+                     high = score
               pen.clear()
               pen.write(f"Score: {score} High Score: {high}", align ="center",font=("courier", 14, "normal"))
 
-             
+                   # Trying to trigger a game over with this code below 
+        if head.xcor() > 190 or head.xcor() < -190 or head.ycor() > 290 or head.ycor() < -290:
+                        save_score()
+                        print("Game Over")
+                        time.sleep(2)
+                        win.bye()
 
 def grow_snake():
         new_segment = turtle.Turtle()
