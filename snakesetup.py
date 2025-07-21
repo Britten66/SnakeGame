@@ -5,6 +5,8 @@ import turtle
 import time
 
 # Step 2: Create Screen 
+DELAY = 0.1
+segments = []
 win = turtle.Screen()
 win.title("Snake Game")
 win.bgcolor("black")
@@ -15,15 +17,15 @@ win.tracer(0)
 
 head = turtle.Turtle()
 head.speed(0)
-head.shape(" # Will Pick A Shape Later ") 
+head.shape("square") 
 head.color("green")
 head.penup()
 head.goto(0, 0)
 head.direction = "stop"
 
-#Move Section // Come Back To This ??? 
+  #Move Section // Come Back To This ??? 
 
-#Moving with def 
+ #Moving with def 
 
 def UpHere ():
     if head.direction != "down":
@@ -35,41 +37,65 @@ def godown ():
     
 def LeftHere ():
     if head.direction != "right":
-        head.direction = "leaft"
+        head.direction = "left"
 
 def RightMove ():
         if head.direction != "left":
-             head.direction = "right" 
+            head.direction = "right" 
 
 def move():
-        if head.direction == "up";
+        # This Was Put In Reverse Order
+        for i in range(len(segments) -1, 0, -1):
+            x = segments[i - 1].xcor()
+            y= segments[i - 1].ycor()
+            segments[i].goto(x,y)
+
+    # FIrst part 
+        if len(segments) > 0:
+         segments[0].goto(head.xcor(), head.ycor())
+
+
+        #moving Head 
+        if head.direction == "up":
                 y = head.ycor() # Cool here ... coor .. nice 
                 head.sety(y+20)
         if head.direction == "down":
-         y = head.ycor # Again very cool here ... -----= === 
-        head.sety(y-20)
+                y = head.ycor() # Again very cool here ... -----= === 
+                head.sety(y-20)
         # X now 
         if head.direction == "left":
-             x = head.xcor()
-             head.setx(x-20)
+                x = head.xcor()
+                head.setx(x-20)
         if head.direction == "right":
-             x = head.xcor()
-             head.setx(x+20)
+                x = head.xcor()
+                head.setx(x+20)
 
+def grow_snake():
+        new_segment = turtle.Turtle()
+        new_segment.speed(0)
+        new_segment.shape("square")
+        new_segment.color("lightgreen")
+        new_segment.penup()
+        segments.append(new_segment)
     # Key Bind Here --- Imortant -- 
 
+
+        #That will take an input from the device being targeted .... ( assuming this is how it works )
+
 win.listen()
-#That will take an input from the device being targeted .... ( assuming this is how it works )
 win.onkeypress(UpHere, "w")
 win.onkeypress(godown, "s")
 win.onkeypress(LeftHere, "a")
 win.onkeypress(RightMove, "d")
 # That Was Awesome 
 
-
+grow_snake()
+grow_snake()
+grow_snake()
 # Going to Have To loop This 
 
 while True:
      win.update()
      move()
-     time.sleep(0,1)
+
+     time.sleep(DELAY)
