@@ -3,9 +3,10 @@
         #imports here
 import turtle
 import time
+import random
 
         # Step 2: Create Screen 
-DELAY = 0.2
+DELAY = 0.1
 segments = []
 win = turtle.Screen()
 win.title("Snake Game")
@@ -22,6 +23,16 @@ head.color("green")
 head.penup()
 head.goto(0, 0)
 head.direction = "stop"
+
+
+#Here Food Is Added
+
+food =turtle.Turtle()
+food.speed(0)
+food.shape("circle")
+food.color("red")
+food.penup()
+food.goto(0,100) # This Will Start Randomly On Screen 
 
   #Move Section // Come Back To This ??? 
 
@@ -70,6 +81,16 @@ def move():
                 x = head.xcor()
                 head.setx(x+20)
 
+
+        if head.distance(food) < 20:
+              
+              x = random.randint(-180, 180)
+              y = random.randint(-280,280)
+              food.goto(x,y)
+
+
+              grow_snake()
+              
 def grow_snake():
         new_segment = turtle.Turtle()
         new_segment.speed(0)
@@ -79,8 +100,7 @@ def grow_snake():
         segments.append(new_segment)
 # Key Bind Here --- Imortant -- 
 
-
-        #That will take an input from the device being targeted .... ( assuming this is how it works )
+ #That will take an input from the device being targeted .... ( assuming this is how it works )
 
 win.listen()
 win.onkeypress(UpHere, "w")
