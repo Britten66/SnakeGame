@@ -1,23 +1,23 @@
 #Author Christopher Britten
 
-#imports here
+        #imports here
 import turtle
 import time
 
-# Step 2: Create Screen 
-DELAY = 0.1
+        # Step 2: Create Screen 
+DELAY = 0.2
 segments = []
 win = turtle.Screen()
 win.title("Snake Game")
 win.bgcolor("black")
-win.setup(width=600,height=600)
+win.setup(width=400,height=600)
 win.tracer(0)
 
-#Snake Head Here
+        #Snake Head Here
 
 head = turtle.Turtle()
 head.speed(0)
-head.shape("square") 
+head.shape("circle") 
 head.color("green")
 head.penup()
 head.goto(0, 0)
@@ -28,31 +28,31 @@ head.direction = "stop"
  #Moving with def 
 
 def UpHere ():
-    if head.direction != "down":
+ if head.direction != "down":
         head.direction = "up" 
 
 def godown ():
-    if head.direction != "up":
-        head.direction = "down"
-    
+        if head.direction != "up":
+         head.direction = "down"
+
 def LeftHere ():
-    if head.direction != "right":
-        head.direction = "left"
+        if head.direction != "right":
+         head.direction = "left"
 
 def RightMove ():
         if head.direction != "left":
-            head.direction = "right" 
+                head.direction = "right" 
 
 def move():
         # This Was Put In Reverse Order
         for i in range(len(segments) -1, 0, -1):
-            x = segments[i - 1].xcor()
-            y= segments[i - 1].ycor()
-            segments[i].goto(x,y)
+                x = segments[i - 1].xcor()
+                y= segments[i - 1].ycor()
+                segments[i].goto(x,y)
 
-    # FIrst part 
+# FIrst part 
         if len(segments) > 0:
-         segments[0].goto(head.xcor(), head.ycor())
+                segments[0].goto(head.xcor(), head.ycor())
 
 
         #moving Head 
@@ -77,7 +77,7 @@ def grow_snake():
         new_segment.color("lightgreen")
         new_segment.penup()
         segments.append(new_segment)
-    # Key Bind Here --- Imortant -- 
+# Key Bind Here --- Imortant -- 
 
 
         #That will take an input from the device being targeted .... ( assuming this is how it works )
@@ -95,7 +95,7 @@ grow_snake()
 # Going to Have To loop This 
 
 while True:
-     win.update()
-     move()
+ win.update() 
+ move()
 
-     time.sleep(DELAY)
+ time.sleep(DELAY)
