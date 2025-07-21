@@ -57,3 +57,19 @@ def move():
              head.setx(x+20)
 
     # Key Bind Here --- Imortant -- 
+
+win.listen()
+#That will take an input from the device being targeted .... ( assuming this is how it works )
+win.onkeypress(UpHere, "w")
+win.onkeypress(godown, "s")
+win.onkeypress(LeftHere, "a")
+win.onkeypress(RightMove, "d")
+# That Was Awesome 
+
+
+# Going to Have To loop This 
+
+while True:
+     win.update()
+     move()
+     time.sleep(0,1)
