@@ -21,35 +21,39 @@ def high_score():
             return 0
       
 DELAY = 0.1
+positions = []
+SPACING = 1
 segments = []
+
 
 score = 0
 high = high_score()
 
 win = turtle.Screen()
 win.title("Snake Game")
-win.bgcolor("black")
+#win.bgcolor("black")
 win.setup(width=400,height=600)
 win.tracer(0)
 
-        #Snake Head Here
+turtle.register_shape("snake_head_custom.gif")
+#Snake Head Section
 
 head = turtle.Turtle()
 head.speed(0)
-head.shape("circle") 
+head.shape("snake_head_custom.gif")                            #Head Section <---
 head.color("green")
 head.penup()
 head.goto(0, 0)
 head.direction = "stop"
-
+head.shapesize(.7)
 
 #Here Food Is Added
-
 food =turtle.Turtle()
 food.speed(0)
 food.shape("circle")
-food.color("red")
+food.shapesize(0.8)
 food.penup()
+food.color("red")                                     #Food Section Here 
 food.goto(0,100) # This Will Start Randomly On Screen 
 
 
@@ -60,6 +64,15 @@ pen.penup()
 pen.hideturtle()
 pen.goto(0, 260)
 pen.write(f"Score: {score} High Score: {high}", align ="center",font=("courier", 14, "normal"))
+
+if score >= 50:
+      win.bgcolor("darkblue")
+elif score >= 30:
+      win.bgcolor("purple")
+elif score >= 10:
+      win.bgcolor("darkgreen")
+else:
+      win.bgcolor("black")
   #Move Section // Come Back To This ??? 
 
  #Moving with def 
@@ -80,16 +93,22 @@ def RightMove ():
         if head.direction != "left":
                 head.direction = "right" 
 
+        
 def move():
+        global positions
+        positions.insert(0, head.pos())
+
+        if len(positions) > len(segments) * SPACING:
+               positions = positions[:len(segments) * SPACING]
         # This Was Put In Reverse Order
-        for i in range(len(segments) -1, 0, -1):
-                x = segments[i - 1].xcor()
-                y= segments[i - 1].ycor()
-                segments[i].goto(x,y)
+        for i in range(len(segments)):
+               index = (i+1) * SPACING
+               if index < len(positions):
+                segments[i].goto(positions[index])
+               
           
 # FIrst part 
-        if len(segments) > 0:
-                segments[0].goto(head.xcor(), head.ycor())
+       
 
 
         #moving Head 
@@ -132,9 +151,11 @@ def move():
 def grow_snake():
         new_segment = turtle.Turtle()
         new_segment.speed(0)
-        new_segment.shape("square")
+        new_segment.shape("circle")
         new_segment.color("lightgreen")
         new_segment.penup()
+        new_segment.shapesize(0.8)
+        new_segment.goto(1000,1000)
         segments.append(new_segment)
 # Key Bind Here --- Imortant -- 
         
