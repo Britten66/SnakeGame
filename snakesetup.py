@@ -31,31 +31,35 @@ high = high_score()
 
 win = turtle.Screen()
 win.title("Snake Game")
+win.bgpic("Background.gif")
 #win.bgcolor("black")
 win.setup(width=400,height=600)
 win.tracer(0)
 
-turtle.register_shape("snake_head_custom.gif")
+
+
+
+turtle.register_shape("SnakeHead.gif")
 #Snake Head Section
 
 head = turtle.Turtle()
 head.speed(0)
-head.shape("snake_head_custom.gif")                            #Head Section <---
+head.shape("SnakeHead.gif")                            #Head Section <---
 head.color("green")
 head.penup()
 head.goto(0, 0)
 head.direction = "stop"
 head.shapesize(.7)
 
+turtle.addshape("foodegg.gif")
 #Here Food Is Added
 food =turtle.Turtle()
 food.speed(0)
-food.shape("circle")
+food.shape("foodegg.gif")
 food.shapesize(0.8)
 food.penup()
 food.color("red")                                     #Food Section Here 
 food.goto(0,100) # This Will Start Randomly On Screen 
-
 
 pen = turtle.Turtle()
 pen.speed(0)
@@ -65,14 +69,6 @@ pen.hideturtle()
 pen.goto(0, 260)
 pen.write(f"Score: {score} High Score: {high}", align ="center",font=("courier", 14, "normal"))
 
-if score >= 50:
-      win.bgcolor("darkblue")
-elif score >= 30:
-      win.bgcolor("purple")
-elif score >= 10:
-      win.bgcolor("darkgreen")
-else:
-      win.bgcolor("black")
   #Move Section // Come Back To This ??? 
 
  #Moving with def 
@@ -108,8 +104,7 @@ def move():
                
           
 # FIrst part 
-       
-
+         
 
         #moving Head 
         if head.direction == "up":
